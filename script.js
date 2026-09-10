@@ -42,7 +42,7 @@ function getTimeSlots(category) {
 
 async function loadBookings() {
   if (supabaseClient) {
-    const { data, error } = await supabaseClient.from('bookings').select('booking_date, booking_time, category');
+    const { data, error } = await supabaseClient.from('booking_availability').select('booking_date, booking_time, category');
     if (!error) {
       remoteBookings = data || [];
       remoteReady = true;
@@ -147,7 +147,7 @@ bookingForm.addEventListener('submit', async (event) => {
 
   successMessage.textContent = `¡Gracias, ${name}! Preparamos tu solicitud para el ${date} a las ${time}.`;
   successMessage.classList.add('visible');
-  const booking = { booking_date: dateInput.value, booking_time: time, category: categoryInput.value, service };
+  const booking = { booking_date: dateInput.value, booking_time: time, category: categoryInput.value, service, client_name: name, client_phone: phone };
   if (supabaseClient) {
     const { error } = await supabaseClient.from('bookings').insert(booking);
     if (error) {

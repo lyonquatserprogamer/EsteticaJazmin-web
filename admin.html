@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas | Jazmin Estetica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <section class="login-panel" id="login-panel">
+      <img src="assets/images/logo-jazmin.jpeg" alt="Logo de Jazmin Estetica">
+      <p class="eyebrow">Acceso privado</p>
+      <h1>Reservas de<br><em>la estética.</em></h1>
+      <p>Ingresá con tu cuenta de empleado para consultar los turnos.</p>
+      <form id="login-form">
+        <label for="email">Correo del empleado<input id="email" type="email" autocomplete="username" required></label>
+        <label for="password">Contraseña<input id="password" type="password" autocomplete="current-password" required></label>
+        <button class="admin-button" type="submit">Ingresar</button>
+        <p class="admin-message" id="login-message" role="alert"></p>
+      </form>
+    </section>
+
+    <section class="dashboard" id="dashboard" hidden>
+      <header class="dashboard-header"><div><p class="eyebrow">Panel privado</p><h1>Turnos <em>agendados.</em></h1></div><button class="logout-button" id="logout" type="button">Cerrar sesión</button></header>
+      <div class="dashboard-tools"><label for="filter-date">Ver fecha<input id="filter-date" type="date"></label><button class="admin-button" id="refresh" type="button">Actualizar</button></div>
+      <p class="admin-message" id="dashboard-message" role="status"></p>
+      <div class="booking-table-wrap"><table><thead><tr><th>Fecha</th><th>Hora</th><th>Cliente</th><th>WhatsApp</th><th>Apartado</th><th>Tratamiento</th></tr></thead><tbody id="booking-list"></tbody></table></div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="admin.js?v=1"></script>
+</body>
+</html>

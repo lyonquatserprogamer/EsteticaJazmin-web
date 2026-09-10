@@ -4,16 +4,21 @@ create table if not exists public.bookings (
   booking_time time not null,
   category text not null check (category in ('peluqueria', 'depilacion', 'manicura', 'pedicura')),
   service text not null,
+  client_name text not null default '',
+  client_phone text not null default '',
   created_at timestamptz not null default now(),
   unique (booking_date, booking_time, category)
 );
 
+alter table public.bookings add column if not exists client_name text not null default '';
+alter table public.bookings add column if not exists client_phone text not null default '';
+
 alter table public.bookings enable row level security;
 
-drop policy if exists "Public can read bookings" on public.bookings;
-create policy "Public can read bookings"
+drop policy if exists "Employees can read bookings" on public.bookings;
+create policy "Employees can read bookings"
   on public.bookings for select
-  to anon
+  to authenticated
   using (true);
 
 drop policy if exists "Public can create bookings" on public.bookings;
@@ -21,3 +26,10 @@ create policy "Public can create bookings"
   on public.bookings for insert
   to anon
   with check (true);
+
+create or replace view public.booking_availability as
+  select booking_date, booking_time, category from public.bookings;
+
+revoke all on public.bookings from anon;
+grant insert on public.bookings to anon;
+grant select on public.booking_availability to anon;
