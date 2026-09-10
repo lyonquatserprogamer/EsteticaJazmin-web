@@ -157,6 +157,8 @@ bookingForm.addEventListener('submit', async (event) => {
       renderTimes();
       return;
     }
+    const { error: emailError } = await supabaseClient.functions.invoke('send-booking-email', { body: booking });
+    if (emailError) console.warn('No se pudo enviar el aviso por correo:', emailError.message);
   } else {
     const savedBookings = JSON.parse(localStorage.getItem('jazmin-bookings') || '[]');
     savedBookings.push({ date: dateInput.value, time, category: categoryInput.value, service });
